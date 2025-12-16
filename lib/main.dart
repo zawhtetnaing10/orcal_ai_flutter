@@ -3,6 +3,7 @@ import 'package:orcal_ai_flutter/network/firebase/firebase_service.dart';
 import 'package:orcal_ai_flutter/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:orcal_ai_flutter/screens/login_screen.dart';
+import 'package:orcal_ai_flutter/screens/register_screen.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "PlusJarkataSans",
       ),
-      home: LoginScreen(),
+      home: RegisterScreen(),
     );
   }
 }
