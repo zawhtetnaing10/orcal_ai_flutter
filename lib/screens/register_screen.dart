@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
 import 'package:orcal_ai_flutter/utils/images.dart' show Images;
 
@@ -17,7 +18,9 @@ class RegisterScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: kBackgroundColor,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.pop();
+          },
           icon: Icon(Icons.chevron_left, color: Colors.white, size: kMarginXXLarge,),
         ),
       ),

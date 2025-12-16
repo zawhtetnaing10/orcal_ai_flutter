@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:orcal_ai_flutter/utils/colors.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
 import 'package:orcal_ai_flutter/utils/images.dart';
+import 'package:orcal_ai_flutter/utils/routes.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_password_input.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_primary_button.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_textfield.dart';
@@ -90,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                     child: OrcalPrimaryButton(
                       label: "Log in",
                       onPressed: () {
-                        print("Login button pressed.");
+                        context.pushNamed(kRegisterRoute);
                       },
                     ),
                   ),
