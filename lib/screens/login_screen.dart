@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:orcal_ai_flutter/actions/login_actions.dart';
+import 'package:orcal_ai_flutter/blocs/login_bloc.dart';
+import 'package:orcal_ai_flutter/dialogs/error_dialog.dart';
+import 'package:orcal_ai_flutter/states/login_state.dart';
 import 'package:orcal_ai_flutter/utils/colors.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
 import 'package:orcal_ai_flutter/utils/images.dart';
@@ -13,115 +19,184 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: kMarginMedium2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 72),
-                  child: Image.asset(
-                    Images.kAppLogo,
-                    width: kLogoSize,
-                    height: kLogoSize,
-                  ),
-                ),
+    return BlocProvider(
+      create: (BuildContext context) => LoginBloc(),
+      child: LoginBody(),
+    );
+  }
+}
 
-                Padding(
-                  padding: EdgeInsets.only(top: kMargin40),
-                  child: Text(
-                    "Welcome Back!",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+class LoginBody extends StatelessWidget {
+  const LoginBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<LoginBloc, LoginState>(
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        switch (state.status) {
+          case LoginEvents.showLoading:
+            {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (dialogContext) {
+                  return Center(
+                    child: LoadingAnimationWidget.staggeredDotsWave(
                       color: Colors.white,
-                      fontSize: kTextBig,
+                      size: 88,
+                    ),
+                  );
+                },
+              );
+            }
+          case LoginEvents.showError:
+            {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (dialogContext) {
+                  return ErrorDialog(
+                    errorMessage: state.errorMessage,
+                    onTapOk: () {
+                      context.read<LoginBloc>().onAction(OnDismissDialog());
+                    },
+                  );
+                },
+              );
+            }
+          case LoginEvents.navigateToHome:
+            {
+              debugPrint("Navigate to home screen");
+            }
+          case LoginEvents.dismissLoading:
+            Navigator.pop(context);
+          case LoginEvents.navigateToRegister:
+            context.pushNamed(kRegisterRoute);
+          case LoginEvents.initial:
+          // Do Nothing
+        }
+      },
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: kMarginMedium2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 72),
+                    child: Image.asset(
+                      Images.kAppLogo,
+                      width: kLogoSize,
+                      height: kLogoSize,
                     ),
                   ),
-                ),
 
-                /// Email
-                Padding(
-                  padding: EdgeInsets.only(top: kMarginXLarge),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: OrcalTextField(
-                      label: "Email",
-                      hint: "example@gmail.com",
-                      onTextChanged: (email) {},
-                    ),
-                  ),
-                ),
-
-                /// Password
-                Padding(
-                  padding: EdgeInsets.only(top: kMarginMedium2),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: OrcalPasswordInput(
-                      label: "Password",
-                      hint: "@Snl#af8",
-                      onTextChanged: (password) {},
-                    ),
-                  ),
-                ),
-
-                /// Forgot Password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
+                  Padding(
+                    padding: EdgeInsets.only(top: kMargin40),
                     child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(color: kPrimaryColor),
+                      "Welcome Back!",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: kTextBig,
+                      ),
                     ),
                   ),
-                ),
 
-                /// Login Button
-                Padding(
-                  padding: EdgeInsets.only(top: kMarginXLarge),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: kMarginXXLarge,
-                    child: OrcalPrimaryButton(
-                      label: "Log in",
-                      onPressed: () {
-                        context.pushNamed(kRegisterRoute);
-                      },
+                  /// Email
+                  Padding(
+                    padding: EdgeInsets.only(top: kMarginXLarge),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: OrcalTextField(
+                        label: "Email",
+                        hint: "example@gmail.com",
+                        onTextChanged: (email) {
+                          context.read<LoginBloc>().onAction(
+                            OnEmailChanged(email),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
 
-                /// Don't have an account?
-                Padding(
-                  padding: EdgeInsets.only(top: kMarginLarge),
-                  child: Text(
-                    "Don't have an account?",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: kTextRegular,
+                  /// Password
+                  Padding(
+                    padding: EdgeInsets.only(top: kMarginMedium2),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: OrcalPasswordInput(
+                        label: "Password",
+                        hint: "@Snl#af8",
+                        onTextChanged: (password) {
+                          context.read<LoginBloc>().onAction(
+                            OnPasswordChanged(password),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
 
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Sign up",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: kTextRegular3X,
-                      fontWeight: FontWeight.bold,
+                  /// Forgot Password
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(color: kPrimaryColor),
+                      ),
                     ),
                   ),
-                ),
-              ],
+
+                  /// Login Button
+                  Padding(
+                    padding: EdgeInsets.only(top: kMarginXLarge),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: kMarginXXLarge,
+                      child: OrcalPrimaryButton(
+                        label: "Log in",
+                        onPressed: () {
+                          context.read<LoginBloc>().onAction(OnTapLogin());
+                        },
+                      ),
+                    ),
+                  ),
+
+                  /// Don't have an account?
+                  Padding(
+                    padding: EdgeInsets.only(top: kMarginLarge),
+                    child: Text(
+                      "Don't have an account?",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: kTextRegular,
+                      ),
+                    ),
+                  ),
+
+                  TextButton(
+                    onPressed: () {
+                      context.read<LoginBloc>().onAction(OnTapSignUp());
+                    },
+                    child: Text(
+                      "Sign up",
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: kTextRegular3X,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
