@@ -12,7 +12,7 @@ part of 'orcal_api_client.dart';
 
 class _OrcalApiClient implements OrcalApiClient {
   _OrcalApiClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://10.0.2.2';
+    baseUrl ??= 'http://10.0.2.2:8080';
   }
 
   final Dio _dio;

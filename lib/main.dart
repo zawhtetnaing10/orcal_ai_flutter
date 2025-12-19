@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:orcal_ai_flutter/network/firebase/firebase_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:orcal_ai_flutter/screens/login_screen.dart';
-import 'package:orcal_ai_flutter/screens/register_screen.dart';
+import 'package:orcal_ai_flutter/screens/create_account_screen.dart';
 import 'package:orcal_ai_flutter/utils/routes.dart';
 import 'firebase_options.dart';
 
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         pageBuilder: (context, state) {
           return CustomTransitionPage(
             key: state.pageKey,
-            child: const RegisterScreen(),
+            child: const CreateAccountScreen(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               return FadeTransition(
                 opacity: CurveTween(curve: Curves.easeInOut).animate(animation),

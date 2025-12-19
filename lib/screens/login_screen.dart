@@ -10,6 +10,7 @@ import 'package:orcal_ai_flutter/utils/colors.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
 import 'package:orcal_ai_flutter/utils/images.dart';
 import 'package:orcal_ai_flutter/utils/routes.dart';
+import 'package:orcal_ai_flutter/utils/widget_utils.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_password_input.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_primary_button.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_textfield.dart';
@@ -36,39 +37,17 @@ class LoginBody extends StatelessWidget {
       listener: (context, state) {
         switch (state.status) {
           case LoginEvents.showLoading:
-            {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (dialogContext) {
-                  return Center(
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                      color: Colors.white,
-                      size: 88,
-                    ),
-                  );
-                },
-              );
-            }
+            showLoadingDialog(context);
           case LoginEvents.showError:
-            {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (dialogContext) {
-                  return ErrorDialog(
-                    errorMessage: state.errorMessage,
-                    onTapOk: () {
-                      context.read<LoginBloc>().onAction(OnDismissDialog());
-                    },
-                  );
-                },
-              );
-            }
+            showErrorDialog(
+              context: context,
+              errorMessage: state.errorMessage,
+              onTapOk: () {
+                context.read<LoginBloc>().onAction(OnDismissDialog());
+              },
+            );
           case LoginEvents.navigateToHome:
-            {
-              debugPrint("Navigate to home screen");
-            }
+            debugPrint("Navigate to home screen");
           case LoginEvents.dismissLoading:
             Navigator.pop(context);
           case LoginEvents.navigateToRegister:

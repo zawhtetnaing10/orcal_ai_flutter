@@ -40,4 +40,11 @@ class LoginState {
 }
 
 /// This is for navigation, showing loading, error, etc...
-enum LoginEvents { initial, showLoading, navigateToHome, dismissLoading, showError, navigateToRegister }
+enum LoginEvents {
+  initial,
+  showLoading,
+  navigateToHome,
+  dismissLoading,
+  showError,
+  navigateToRegister,
+}
