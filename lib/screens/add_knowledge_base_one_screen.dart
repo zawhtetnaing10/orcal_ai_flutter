@@ -7,7 +7,7 @@ import 'package:orcal_ai_flutter/utils/strings.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_primary_button.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_text_area.dart'
     show OrcalTextArea;
-import 'package:orcal_ai_flutter/widgets/orcal_textfield.dart';
+import 'package:orcal_ai_flutter/widgets/orcal_textfield_with_label.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_timezone_picker.dart';
 
 class AddKnowledgeBaseOneScreen extends StatelessWidget {
@@ -80,7 +80,7 @@ class AddKnowledgeBaseOneScreen extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   height: kMarginXXLarge,
-                  child: OrcalPrimaryButton(label: "Next", onPressed: () {
+                  child: OrcalPrimaryButton(label: kNext, onPressed: () {
                     // TODO: - Notify Bloc
                     context.pushNamed(kAddKnowledgeBaseTwoRoute);
                   }),

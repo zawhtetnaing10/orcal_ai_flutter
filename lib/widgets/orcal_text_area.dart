@@ -18,6 +18,7 @@ class OrcalTextArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       spacing: kMarginCardMedium2,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: TextStyle(color: Colors.white)),
         Container(

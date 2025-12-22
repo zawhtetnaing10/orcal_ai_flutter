@@ -13,7 +13,7 @@ import 'package:orcal_ai_flutter/utils/routes.dart';
 import 'package:orcal_ai_flutter/utils/widget_utils.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_password_input.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_primary_button.dart';
-import 'package:orcal_ai_flutter/widgets/orcal_textfield.dart';
+import 'package:orcal_ai_flutter/widgets/orcal_textfield_with_label.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

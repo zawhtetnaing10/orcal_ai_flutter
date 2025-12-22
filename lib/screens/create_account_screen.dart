@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:orcal_ai_flutter/actions/create_account_actions.dart';
 import 'package:orcal_ai_flutter/blocs/create_account_bloc.dart';
 import 'package:orcal_ai_flutter/states/create_account_state.dart';
@@ -11,7 +10,7 @@ import 'package:orcal_ai_flutter/utils/widget_utils.dart';
 import '../utils/colors.dart';
 import '../widgets/orcal_password_input.dart';
 import '../widgets/orcal_primary_button.dart';
-import '../widgets/orcal_textfield.dart';
+import '../widgets/orcal_textfield_with_label.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
@@ -68,12 +67,12 @@ class CreateAccountBody extends StatelessWidget {
           backgroundColor: kBackgroundColor,
           leading: IconButton(
             onPressed: () {
-              context.pop();
+              context.read<CreateAccountBloc>().onAction(OnTapBack());
             },
             icon: Icon(
               Icons.chevron_left,
               color: Colors.white,
-              size: kMarginXXLarge,
+              size: kMarginXLarge,
             ),
           ),
         ),
