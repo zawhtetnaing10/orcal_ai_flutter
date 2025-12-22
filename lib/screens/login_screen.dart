@@ -93,7 +93,7 @@ class LoginBody extends StatelessWidget {
                     padding: EdgeInsets.only(top: kMarginXLarge),
                     child: SizedBox(
                       width: double.infinity,
-                      child: OrcalTextField(
+                      child: OrcalTextFieldWithLabel(
                         label: "Email",
                         hint: "example@gmail.com",
                         onTextChanged: (email) {

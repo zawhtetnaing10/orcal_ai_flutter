@@ -21,7 +21,7 @@ class OrcalPrimaryButton extends StatelessWidget {
         backgroundColor: kPrimaryColor,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(kMarginMedium2),
+          borderRadius: BorderRadius.circular(kMarginCardMedium2),
         ),
       ),
       child: Text(

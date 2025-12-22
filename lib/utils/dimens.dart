@@ -16,5 +16,6 @@ const kTextLarge = 24.0;
 const kTextBig = 32.0;
 
 const kTextFieldHeight = 56.0;
+const kTextAreaHeight = 100.0;
 const kDialogLogoSize = 100.0;
 const kLogoSize = 150.0;

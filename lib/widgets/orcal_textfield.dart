@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:orcal_ai_flutter/utils/colors.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
 
-class OrcalTextField extends StatelessWidget {
+class OrcalTextFieldWithLabel extends StatelessWidget {
   final String label;
   final String hint;
   final Function(String) onTextChanged;
 
-  const OrcalTextField({
+  const OrcalTextFieldWithLabel({
     super.key,
     required this.label,
     required this.hint,
@@ -18,7 +18,7 @@ class OrcalTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: kMarginMedium,
+      spacing: kMarginCardMedium2,
       children: [
         Text(label, style: TextStyle(color: Colors.white)),
         Container(

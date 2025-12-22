@@ -109,7 +109,7 @@ class CreateAccountBody extends StatelessWidget {
                     padding: EdgeInsets.only(top: kMarginXLarge),
                     child: SizedBox(
                       width: double.infinity,
-                      child: OrcalTextField(
+                      child: OrcalTextFieldWithLabel(
                         label: "Email",
                         hint: "example@gmail.com",
                         onTextChanged: (email) {
@@ -143,7 +143,7 @@ class CreateAccountBody extends StatelessWidget {
                     padding: EdgeInsets.only(top: kMarginMedium2),
                     child: SizedBox(
                       width: double.infinity,
-                      child: OrcalTextField(
+                      child: OrcalTextFieldWithLabel(
                         label: "Name",
                         hint: "Jack",
                         onTextChanged: (userName) {
