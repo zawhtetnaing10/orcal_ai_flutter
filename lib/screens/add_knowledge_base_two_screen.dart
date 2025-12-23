@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:orcal_ai_flutter/actions/add_knowledge_base_two_actions.dart';
+import 'package:orcal_ai_flutter/blocs/add_knowledge_base_two_bloc.dart';
+import 'package:orcal_ai_flutter/states/add_knowledge_base_two_state.dart';
 import 'package:orcal_ai_flutter/utils/colors.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
 import 'package:orcal_ai_flutter/utils/routes.dart';
 import 'package:orcal_ai_flutter/utils/strings.dart';
+import 'package:orcal_ai_flutter/utils/widget_utils.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_multiple_text_fields.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_primary_button.dart';
 import 'package:orcal_ai_flutter/widgets/orcal_radio_buttons.dart';
@@ -14,108 +19,156 @@ class AddKnowledgeBaseTwoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      appBar: AppBar(
+    return BlocProvider(
+      create: (BuildContext context) => AddKnowledgeBaseTwoBloc(),
+      child: AddKnowledgeBaseTwoBody(),
+    );
+  }
+}
+
+class AddKnowledgeBaseTwoBody extends StatelessWidget {
+  const AddKnowledgeBaseTwoBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AddKnowledgeBaseTwoBloc, AddKnowledgeBaseTwoState>(
+      listenWhen: (previous, current) => previous.events != current.events,
+      listener: (context, state) {
+        switch (state.events) {
+          case AddKnowledgeBaseTwoEvents.initial:
+            break;
+          case AddKnowledgeBaseTwoEvents.showLoading:
+            showLoadingDialog(context);
+            break;
+          case AddKnowledgeBaseTwoEvents.dismissLoading:
+            Navigator.pop(context);
+            break;
+          case AddKnowledgeBaseTwoEvents.navigateToStepThree:
+            context.pushNamed(kAddKnowledgeBaseThreeRoute);
+            break;
+          case AddKnowledgeBaseTwoEvents.showError:
+            context.read<AddKnowledgeBaseTwoBloc>().onAction(
+              OnAddKnowledgeBaseTwoDismissDialog(),
+            );
+            break;
+        }
+      },
+      child: Scaffold(
         backgroundColor: kBackgroundColor,
-        leading: IconButton(
-          onPressed: () {
-            context.pop();
-          },
-          icon: Icon(
-            Icons.chevron_left,
-            color: Colors.white,
-            size: kMarginXLarge,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: kMarginCardMedium2),
-            child: Text(
-              "2/3",
-              style: TextStyle(color: Colors.white, fontSize: kTextRegular2X),
+        appBar: AppBar(
+          backgroundColor: kBackgroundColor,
+          leading: IconButton(
+            onPressed: () {
+              context.pop();
+            },
+            icon: Icon(
+              Icons.chevron_left,
+              color: Colors.white,
+              size: kMarginXLarge,
             ),
           ),
-        ],
-      ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          actions: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: kMarginMedium2),
+              padding: EdgeInsets.symmetric(horizontal: kMarginCardMedium2),
               child: Text(
-                kLetsBuildOurKnowledgeBase,
-                style: TextStyle(
-                  fontSize: kTextBig,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(
-                top: kMarginMedium3,
-                left: kMarginMedium2,
-                right: kMarginMedium2,
-              ),
-              child: OrcalTextArea(
-                label: "What are your primary technical skills and tools?",
-                hint: "Your primary skills and tools...",
-                onChanged: (input) {},
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(
-                top: kMarginMedium3,
-                left: kMarginMedium2,
-                right: kMarginMedium2,
-              ),
-              child: OrcalMultipleTextFields(
-                label: "What are your current top 3 professional goals?",
-                count: 3,
-                hint: "Professional Goal...",
-                onInputChanged: (inputs) {},
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(top: kMarginMedium3),
-              child: OrcalRadioButtons(
-                innerPadding: kMarginMedium2,
-                label: "When are you most productive?",
-                items: [
-                  "5AM - 9 AM (Early Bird)",
-                  "9AM - 5 PM (Core Business Hours)",
-                  "9PM - 2AM (Night Owl)",
-                ],
-                onSelectItem: (chosenItem) {},
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(
-                top: kMarginXLarge,
-                left: kMarginMedium2,
-                right: kMarginMedium2,
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                height: kMarginXXLarge,
-                child: OrcalPrimaryButton(
-                  label: kNext,
-                  onPressed: () {
-                    // TODO: - Notify Bloc
-                    context.pushNamed(kAddKnowledgeBaseThreeRoute);
-                  },
-                ),
+                "2/3",
+                style: TextStyle(color: Colors.white, fontSize: kTextRegular2X),
               ),
             ),
           ],
+        ),
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: kMarginMedium2),
+                child: Text(
+                  kLetsBuildOurKnowledgeBase,
+                  style: TextStyle(
+                    fontSize: kTextBig,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(
+                  top: kMarginMedium3,
+                  left: kMarginMedium2,
+                  right: kMarginMedium2,
+                ),
+                child: OrcalTextArea(
+                  label: "What are your primary technical skills and tools?",
+                  hint: "Your primary skills and tools...",
+                  onChanged: (answer) {
+                    context.read<AddKnowledgeBaseTwoBloc>().onAction(
+                      OnTechSkillsAndToolsAnswerChanged(
+                        techSkillsAndToolsAnswer: answer,
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(
+                  top: kMarginMedium3,
+                  left: kMarginMedium2,
+                  right: kMarginMedium2,
+                ),
+                child: OrcalMultipleTextFields(
+                  label: "What are your current top 3 professional goals?",
+                  count: 3,
+                  hint: "Professional Goal...",
+                  onInputChanged: (inputs) {
+                    context.read<AddKnowledgeBaseTwoBloc>().onAction(
+                      OnTopThreeProfessionalGoalsAnswerChanged(
+                        topThreeProfessionalGoalsAnswer: inputs,
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(top: kMarginMedium3),
+                child: OrcalRadioButtons(
+                  innerPadding: kMarginMedium2,
+                  label: "When are you most productive?",
+                  items: [
+                    "5AM - 9 AM (Early Bird)",
+                    "9AM - 5 PM (Core Business Hours)",
+                    "9PM - 2AM (Night Owl)",
+                  ],
+                  onSelectItem: (chosenAnswer) {
+                    context.read<AddKnowledgeBaseTwoBloc>().onAction(OnMostProductiveTimeChanged(mostProductiveTime: chosenAnswer));
+                  },
+                ),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(
+                  top: kMarginXLarge,
+                  left: kMarginMedium2,
+                  right: kMarginMedium2,
+                ),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: kMarginXXLarge,
+                  child: OrcalPrimaryButton(
+                    label: kNext,
+                    onPressed: () {
+                      context.read<AddKnowledgeBaseTwoBloc>().onAction(OnTapNext());
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

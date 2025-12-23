@@ -12,8 +12,10 @@ class LoginBloc extends Cubit<LoginState> {
     switch (action) {
       case OnEmailChanged():
         emit(state.copyWith(email: action.email));
+        break;
       case OnPasswordChanged():
         emit(state.copyWith(password: action.password));
+        break;
       case OnTapLogin():
         if (state.email.isEmpty) {
           emit(
@@ -51,8 +53,11 @@ class LoginBloc extends Cubit<LoginState> {
         }
       case OnDismissDialog():
         emit(state.copyWith(status: LoginEvents.initial));
+        break;
       case OnTapSignUp():
         emit(state.copyWith(status: LoginEvents.navigateToRegister));
+        emit(state.copyWith(status: LoginEvents.initial));
+        break;
     }
   }
 }

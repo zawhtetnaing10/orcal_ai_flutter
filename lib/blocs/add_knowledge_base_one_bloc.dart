@@ -56,7 +56,7 @@ class AddKnowledgeBaseOneBloc extends Cubit<AddKnowledgeBaseOneState> {
         }
 
         /// Build knowledge base objects
-        Map<int, InfoToEmbedVO> infosToAdd = HashMap();
+        Map<int, InfoToEmbedVO> infosToAdd = {};
         InfoToEmbedVO identityInfo = InfoToEmbedVO(
           id: 1,
           title: KbTitles.kQ1Identity,
@@ -80,13 +80,11 @@ class AddKnowledgeBaseOneBloc extends Cubit<AddKnowledgeBaseOneState> {
         KnowledgeBaseCache().clearInfoToEmbed();
         KnowledgeBaseCache().addInfoToEmbedMultiple(infosToAdd);
 
-        // TODO: - Delete after testing
-        print("Knowledge base =====> ${KnowledgeBaseCache().knowledgeBaseCache}");
-
         /// Navigate to step two
         emit(
           state.copyWith(events: AddKnowledgeBaseOneEvents.navigateToStepTwo),
         );
+        emit(state.copyWith(events: AddKnowledgeBaseOneEvents.initial));
     }
   }
 }
