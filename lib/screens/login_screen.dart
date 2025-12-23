@@ -47,7 +47,7 @@ class LoginBody extends StatelessWidget {
               },
             );
           case LoginEvents.navigateToHome:
-            debugPrint("Navigate to home screen");
+            context.pushNamed(kAddKnowledgeBaseOneRoute);
           case LoginEvents.dismissLoading:
             Navigator.pop(context);
           case LoginEvents.navigateToRegister:

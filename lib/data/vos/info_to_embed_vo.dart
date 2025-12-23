@@ -18,4 +18,9 @@ class InfoToEmbedVO {
       _$InfoToEmbedVOFromJson(json);
 
   Map<String, dynamic> toJson() => _$InfoToEmbedVOToJson(this);
+
+  @override
+  String toString() {
+    return 'InfoToEmbedVO{id: $id, title: $title, details: $details}';
+  }
 }

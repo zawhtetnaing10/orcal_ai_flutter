@@ -10,6 +10,15 @@ import 'package:orcal_ai_flutter/network/responses/user_response.dart';
 import 'package:orcal_ai_flutter/network/retrofit_provider.dart';
 
 class OrcalRepository {
+  /// Singleton
+  static final OrcalRepository _instance = OrcalRepository._internal();
+
+  OrcalRepository._internal();
+
+  factory OrcalRepository() {
+    return _instance;
+  }
+
   /// Rest Api
   final OrcalApiClient _client = RetrofitProvider().apiClient;
 
