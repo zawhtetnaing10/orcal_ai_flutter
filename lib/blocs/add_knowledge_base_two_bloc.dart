@@ -34,7 +34,7 @@ class AddKnowledgeBaseTwoBloc extends Cubit<AddKnowledgeBaseTwoState> {
                   "Please fill in your preferred tech skills and tools",
             ),
           );
-          break;
+          return;
         }
 
         if (state.topThreeProfessionalGoals.isEmpty) {
@@ -44,7 +44,7 @@ class AddKnowledgeBaseTwoBloc extends Cubit<AddKnowledgeBaseTwoState> {
               errorMessage: "Please fill in your top three professional goals.",
             ),
           );
-          break;
+          return;
         }
 
         if (state.mostProductiveTime.isEmpty) {
@@ -54,7 +54,7 @@ class AddKnowledgeBaseTwoBloc extends Cubit<AddKnowledgeBaseTwoState> {
               errorMessage: "Please choose your most productive time.",
             ),
           );
-          break;
+          return;
         }
 
         /// Details for top three professional goals
@@ -87,11 +87,6 @@ class AddKnowledgeBaseTwoBloc extends Cubit<AddKnowledgeBaseTwoState> {
 
         /// Save Knowledge in cache.
         KnowledgeBaseCache().addInfoToEmbedMultiple(infosToAdd);
-
-        // TODO: - Delete this after testing.
-        print(
-          "Knowledge base =====> ${KnowledgeBaseCache().knowledgeBaseCache}",
-        );
 
         /// Emit events for navigation
         emit(

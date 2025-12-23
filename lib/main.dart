@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:orcal_ai_flutter/screens/add_knowledge_base_one_screen.dart';
 import 'package:orcal_ai_flutter/screens/add_knowledge_base_three_screen.dart';
 import 'package:orcal_ai_flutter/screens/add_knowledge_base_two_screen.dart';
+import 'package:orcal_ai_flutter/screens/home_screen.dart';
 import 'package:orcal_ai_flutter/screens/login_screen.dart';
 import 'package:orcal_ai_flutter/screens/create_account_screen.dart';
 import 'package:orcal_ai_flutter/utils/routes.dart';
@@ -53,6 +54,11 @@ class MyApp extends StatelessWidget {
         name: kAddKnowledgeBaseThreeRoute,
         pageBuilder: createPageBuilder(const AddKnowledgeBaseThreeScreen()),
       ),
+      GoRoute(
+        path : kHomePath,
+        name: kHomeRoute,
+        pageBuilder: createPageBuilder(const HomeScreen()),
+      )
     ],
   );
 

@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 class AddKnowledgeBaseTwoState {
   String techSkillsAndTools;
   Map<int, String> topThreeProfessionalGoals;

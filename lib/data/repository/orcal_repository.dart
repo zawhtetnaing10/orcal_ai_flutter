@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:orcal_ai_flutter/data/knowledge_base_cache/knowledge_base_cache.dart';
 import 'package:orcal_ai_flutter/data/vos/info_to_embed_vo.dart';
 import 'package:orcal_ai_flutter/network/firebase/firebase_service.dart';
 import 'package:orcal_ai_flutter/network/orcal_api_client.dart';
@@ -8,6 +9,7 @@ import 'package:orcal_ai_flutter/network/requests/register_request.dart';
 import 'package:orcal_ai_flutter/network/responses/generic_response.dart';
 import 'package:orcal_ai_flutter/network/responses/user_response.dart';
 import 'package:orcal_ai_flutter/network/retrofit_provider.dart';
+import 'package:orcal_ai_flutter/utils/constants.dart';
 
 class OrcalRepository {
   /// Singleton
@@ -42,9 +44,16 @@ class OrcalRepository {
     return _client.register(request);
   }
 
-  Future<GenericResponse> buildEmbeddings(
-    List<InfoToEmbedVO> infoToEmbed,
-  ) async {
+  Future<GenericResponse> buildEmbeddings() async {
+    /// Get information to embed from knowledge base
+    List<InfoToEmbedVO> infoToEmbed = KnowledgeBaseCache()
+        .knowledgeBaseCache
+        .values
+        .toList();
+    if (infoToEmbed.length < kNumberOfInfoToEmbed) {
+      return Future.error("There are missing answers. Please answer all the questions to build the complete knowledge base.");
+    }
+
     BuildEmbeddingsRequest request = BuildEmbeddingsRequest(data: infoToEmbed);
     String idToken = await _firebaseService.getBearerToken();
     return _client.buildEmbeddings(idToken, request);

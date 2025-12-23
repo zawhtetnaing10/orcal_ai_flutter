@@ -4,3 +4,6 @@ const kEndpointBuildEmbeddings = "/build-embeddings";
 const kEndpointChat = "/chat";
 
 const kHeaderAuthorization = "Authorization";
+
+
+const kNumberOfInfoToEmbed = 8;
