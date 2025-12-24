@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   // Router Set up
   final GoRouter _router = GoRouter(
     // TODO: - Change back after testing
-    initialLocation: kLoginPath,
+    initialLocation: kHomePath,
     routes: [
       GoRoute(
         path: kLoginPath,

@@ -4,6 +4,7 @@ const kMarginCardMedium2 = 12.0;
 const kMarginMedium2 = 16.0;
 const kMarginMedium3 = 20.0;
 const kMarginLarge = 24.0;
+const kMargin28 = 28.0;
 const kMarginXLarge = 32.0;
 const kMargin40 = 40.0;
 const kMarginXXLarge = 48.0;
@@ -19,3 +20,7 @@ const kTextFieldHeight = 56.0;
 const kTextAreaHeight = 100.0;
 const kDialogLogoSize = 100.0;
 const kLogoSize = 150.0;
+
+const kChatLogoSize = 28.0;
+
+const kChatBarHeight = 88.0;

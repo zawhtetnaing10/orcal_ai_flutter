@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:orcal_ai_flutter/utils/constants.dart';
 
 class ChatMessage {
   final String id;
@@ -13,7 +14,9 @@ class ChatMessage {
     required this.timestamp,
   });
 
-  factory ChatMessage.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+  factory ChatMessage.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> doc,
+  ) {
     final data = doc.data()!;
     return ChatMessage(
       id: doc.id,
@@ -21,5 +24,13 @@ class ChatMessage {
       content: data['content'] as String? ?? '',
       timestamp: int.tryParse(doc.id) ?? 0,
     );
+  }
+
+  bool isUser() {
+    return speaker == kSpeakerUser;
+  }
+
+  bool isModel() {
+    return speaker == kSpeakerModel;
   }
 }

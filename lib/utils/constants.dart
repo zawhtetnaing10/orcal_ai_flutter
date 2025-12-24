@@ -7,3 +7,6 @@ const kHeaderAuthorization = "Authorization";
 
 
 const kNumberOfInfoToEmbed = 8;
+
+const kSpeakerUser = "user";
+const kSpeakerModel = "model";
