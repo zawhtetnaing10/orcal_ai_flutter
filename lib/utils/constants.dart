@@ -6,6 +6,7 @@ const kEndpointChat = "/chat";
 const kHeaderAuthorization = "Authorization";
 
 
+const kSplashScreenWaitTime = 3;
 const kNumberOfInfoToEmbed = 8;
 
 const kSpeakerUser = "user";

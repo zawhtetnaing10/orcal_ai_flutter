@@ -8,6 +8,7 @@ import 'package:orcal_ai_flutter/screens/add_knowledge_base_two_screen.dart';
 import 'package:orcal_ai_flutter/screens/home_screen.dart';
 import 'package:orcal_ai_flutter/screens/login_screen.dart';
 import 'package:orcal_ai_flutter/screens/create_account_screen.dart';
+import 'package:orcal_ai_flutter/screens/splash_screen.dart';
 import 'package:orcal_ai_flutter/utils/routes.dart';
 import 'firebase_options.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
 
   // Router Set up
   final GoRouter _router = GoRouter(
-    initialLocation: kLoginPath,
+    initialLocation: kSplashPath,
     routes: [
       GoRoute(
         path: kLoginPath,
@@ -57,6 +58,11 @@ class MyApp extends StatelessWidget {
         path : kHomePath,
         name: kHomeRoute,
         pageBuilder: createPageBuilder(const HomeScreen()),
+      ),
+      GoRoute(
+        path : kSplashPath,
+        name: kSplashRoute,
+        pageBuilder: createPageBuilder(const SplashScreen()),
       )
     ],
   );

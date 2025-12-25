@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:orcal_ai_flutter/actions/login_actions.dart';
 import 'package:orcal_ai_flutter/blocs/login_bloc.dart';
-import 'package:orcal_ai_flutter/dialogs/error_dialog.dart';
 import 'package:orcal_ai_flutter/states/login_state.dart';
 import 'package:orcal_ai_flutter/utils/colors.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
