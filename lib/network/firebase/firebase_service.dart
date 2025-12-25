@@ -5,7 +5,9 @@ import 'package:orcal_ai_flutter/network/firebase/dtos/chat_message.dart';
 class FirebaseService {
   // Singleton instance
   static final FirebaseService _instance = FirebaseService._internal();
+
   FirebaseService._internal();
+
   factory FirebaseService() {
     return _instance;
   }
@@ -23,15 +25,18 @@ class FirebaseService {
 
   /// Sign in with Email and Password
   Future<User?> signIn(String email, String password) async {
-    if (email.isEmpty){
+    if (email.isEmpty) {
       return Future.error("Email cannot be empty");
     }
 
-    if(password.isEmpty){
+    if (password.isEmpty) {
       return Future.error("Password cannot be empty");
     }
 
-    UserCredential credentials = await auth.signInWithEmailAndPassword(email: email, password: password);
+    UserCredential credentials = await auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
     return credentials.user;
   }
 
@@ -41,22 +46,44 @@ class FirebaseService {
   }
 
   /// Get current user uid
-  String getCurrentUserUid(){
+  String getCurrentUserUid() {
     return auth.currentUser?.uid ?? "";
   }
 
   /// Get id token of the current user
   Future<String> getBearerToken() async {
     String? idToken = await auth.currentUser?.getIdToken();
-    if(idToken != null){
+    if (idToken != null) {
       return "Bearer $idToken";
     } else {
       return "";
     }
   }
 
+  /// Checks if the user has already built the knowledge base
+  Future<bool> isKnowledgeBaseBuilt() async {
+    try {
+      String uid = getCurrentUserUid();
+      DocumentSnapshot snapshot = await db
+          .collection("users")
+          .doc(uid)
+          .collection("config")
+          .doc("rag_config")
+          .get();
+
+      if (!snapshot.exists) {
+        return Future.error("Data does not exists");
+      }
+
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+      return data["is_knowledge_base_built"] as bool? ?? false;
+    } on Exception catch (e) {
+      return Future.error("Error checking knowledge base $e");
+    }
+  }
+
   /// Get Latest Messages
-  Stream<List<ChatMessage>> getLatestMessages(){
+  Stream<List<ChatMessage>> getLatestMessages() {
     String uid = getCurrentUserUid();
 
     Query query = db
@@ -70,7 +97,11 @@ class FirebaseService {
 
     return query.snapshots().map((snapshot) {
       final messages = snapshot.docs
-          .map((doc) => ChatMessage.fromFirestore(doc as DocumentSnapshot<Map<String, dynamic>>))
+          .map(
+            (doc) => ChatMessage.fromFirestore(
+              doc as DocumentSnapshot<Map<String, dynamic>>,
+            ),
+          )
           .toList();
       return messages.reversed.toList();
     });

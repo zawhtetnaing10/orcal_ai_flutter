@@ -55,6 +55,6 @@ enum CreateAccountEvents {
   showLoading,
   dismissLoading,
   navigateBack,
-  navigateToHome,
+  navigateToBuildKnowledgeBase,
   showError,
 }

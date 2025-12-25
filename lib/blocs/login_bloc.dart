@@ -1,12 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:orcal_ai_flutter/actions/login_actions.dart';
 import 'package:orcal_ai_flutter/data/repository/orcal_repository.dart';
+import 'package:orcal_ai_flutter/mixins/check_knowldge_base_mixin.dart';
 import 'package:orcal_ai_flutter/states/login_state.dart';
 
-class LoginBloc extends Cubit<LoginState> {
+class LoginBloc extends Cubit<LoginState> with CheckKnowledgeBaseMixin {
   LoginBloc() : super(LoginState());
 
-  final repository = OrcalRepository();
+  final repo = OrcalRepository();
 
   void onAction(LoginActions action) async {
     switch (action) {
@@ -39,9 +40,15 @@ class LoginBloc extends Cubit<LoginState> {
 
         emit(state.copyWith(status: LoginEvents.showLoading));
         try {
-          await repository.signIn(state.email, state.password);
+          await repo.signIn(state.email, state.password);
           emit(state.copyWith(status: LoginEvents.dismissLoading));
-          emit(state.copyWith(status: LoginEvents.navigateToHome));
+
+          checkKnowledgeBase(repo: repo, onKBBuilt: (){
+            emit(state.copyWith(status: LoginEvents.navigateToHome));
+          }, onKBNotBuilt: (){
+            emit(state.copyWith(status: LoginEvents.navigateToKnowledgeBase));
+          });
+
         } on Exception catch (e) {
           emit(state.copyWith(status: LoginEvents.dismissLoading));
           emit(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:orcal_ai_flutter/actions/create_account_actions.dart';
 import 'package:orcal_ai_flutter/blocs/create_account_bloc.dart';
 import 'package:orcal_ai_flutter/states/create_account_state.dart';
 import 'package:orcal_ai_flutter/utils/dimens.dart';
 import 'package:orcal_ai_flutter/utils/images.dart' show Images;
+import 'package:orcal_ai_flutter/utils/routes.dart';
 import 'package:orcal_ai_flutter/utils/widget_utils.dart';
 
 import '../utils/colors.dart';
@@ -45,8 +47,8 @@ class CreateAccountBody extends StatelessWidget {
           case CreateAccountEvents.navigateBack:
             Navigator.pop(context);
             break;
-          case CreateAccountEvents.navigateToHome:
-            debugPrint("Navigate to home");
+          case CreateAccountEvents.navigateToBuildKnowledgeBase:
+            context.goNamed(kAddKnowledgeBaseOneRoute);
             break;
           case CreateAccountEvents.showError:
             showErrorDialog(

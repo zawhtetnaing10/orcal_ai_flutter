@@ -43,6 +43,7 @@ class LoginState {
 enum LoginEvents {
   initial,
   showLoading,
+  navigateToKnowledgeBase,
   navigateToHome,
   dismissLoading,
   showError,

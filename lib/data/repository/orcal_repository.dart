@@ -31,17 +31,24 @@ class OrcalRepository {
     return _firebaseService.signIn(email, password);
   }
 
-  Future<UserResponse> register(
-    String email,
-    String password,
-    String username,
-  ) {
+  Future<User?> register(String email, String password, String username) async {
     RegisterRequest request = RegisterRequest(
       email: email,
       password: password,
       username: username,
     );
-    return _client.register(request);
+    await _client.register(request);
+    return signIn(email, password);
+  }
+
+  /// Checks if user is logged in
+  bool isUserLoggedIn() {
+    return _firebaseService.isUserLoggedIn();
+  }
+
+  /// Checks if knowledge base has been built for this user
+  Future<bool> isKnowledgeBaseBuilt() {
+    return _firebaseService.isKnowledgeBaseBuilt();
   }
 
   Future<GenericResponse> buildEmbeddings() async {
@@ -51,7 +58,9 @@ class OrcalRepository {
         .values
         .toList();
     if (infoToEmbed.length < kNumberOfInfoToEmbed) {
-      return Future.error("There are missing answers. Please answer all the questions to build the complete knowledge base.");
+      return Future.error(
+        "There are missing answers. Please answer all the questions to build the complete knowledge base.",
+      );
     }
 
     BuildEmbeddingsRequest request = BuildEmbeddingsRequest(data: infoToEmbed);

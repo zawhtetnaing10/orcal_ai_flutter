@@ -46,8 +46,10 @@ class LoginBody extends StatelessWidget {
                 context.read<LoginBloc>().onAction(OnDismissDialog());
               },
             );
+          case LoginEvents.navigateToKnowledgeBase:
+            context.goNamed(kAddKnowledgeBaseOneRoute);
           case LoginEvents.navigateToHome:
-            context.pushNamed(kAddKnowledgeBaseOneRoute);
+            context.goNamed(kHomeRoute);
           case LoginEvents.dismissLoading:
             Navigator.pop(context);
           case LoginEvents.navigateToRegister:

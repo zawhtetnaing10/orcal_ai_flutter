@@ -53,7 +53,7 @@ class CreateAccountBloc extends Cubit<CreateAccountState> {
           emit(state.copyWith(event: CreateAccountEvents.showLoading));
           await repo.register(state.email, state.password, state.userName);
           emit(state.copyWith(event: CreateAccountEvents.dismissLoading));
-          emit(state.copyWith(event: CreateAccountEvents.navigateToHome));
+          emit(state.copyWith(event: CreateAccountEvents.navigateToBuildKnowledgeBase));
         } on Exception catch (e) {
           emit(state.copyWith(event: CreateAccountEvents.dismissLoading));
           emit(
