@@ -82,17 +82,14 @@ class _OrcalApiClient implements OrcalApiClient {
   }
 
   @override
-  Future<GenericResponse> chat(
-    String authorization,
-    ChatRequest request,
-  ) async {
+  Future<ChatResponse> chat(String authorization, ChatRequest request) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': authorization};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<GenericResponse>(
+    final _options = _setStreamType<ChatResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -103,9 +100,9 @@ class _OrcalApiClient implements OrcalApiClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late GenericResponse _value;
+    late ChatResponse _value;
     try {
-      _value = GenericResponse.fromJson(_result.data!);
+      _value = ChatResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, _result);
       rethrow;

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orcal_ai_flutter/network/firebase/dtos/chat_message.dart';
+import 'package:orcal_ai_flutter/utils/constants.dart';
 
 class FirebaseService {
   // Singleton instance
@@ -83,7 +84,9 @@ class FirebaseService {
   }
 
   /// Get Latest Messages
-  Stream<List<ChatMessage>> getLatestMessages() {
+  Future<(List<ChatMessage>, DocumentSnapshot?)> getLatestMessages({
+    DocumentSnapshot? lastDocument,
+  }) async {
     String uid = getCurrentUserUid();
 
     Query query = db
@@ -93,9 +96,21 @@ class FirebaseService {
         .doc("conversation")
         .collection("messages")
         .orderBy(FieldPath.documentId, descending: true)
-        .limit(10);
+        .limit(kNoOfMessagesPerPage);
 
-    return query.snapshots().map((snapshot) {
+    /// Start after the last document
+    if (lastDocument != null) {
+      query.startAfterDocument(lastDocument);
+    }
+
+    /// Wait for the query to get the data
+    final snapshot = await query.get();
+
+    if (snapshot.docs.isNotEmpty) {
+      /// Last doc
+      final last = snapshot.docs.last;
+
+      /// Map the snapshot to ChatMessage
       final messages = snapshot.docs
           .map(
             (doc) => ChatMessage.fromFirestore(
@@ -103,9 +118,10 @@ class FirebaseService {
             ),
           )
           .toList();
-      return messages.reversed.toList();
-    });
-  }
 
-  /// TODO: - Add another function to load more messages
+      return (messages.reversed.toList(), last);
+    } else {
+      return (<ChatMessage>[], lastDocument);
+    }
+  }
 }

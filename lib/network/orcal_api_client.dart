@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:orcal_ai_flutter/network/requests/build_embeddings_request.dart';
 import 'package:orcal_ai_flutter/network/requests/chat_request.dart';
 import 'package:orcal_ai_flutter/network/requests/register_request.dart';
+import 'package:orcal_ai_flutter/network/responses/chat_response.dart';
 import 'package:orcal_ai_flutter/network/responses/generic_response.dart';
 import 'package:orcal_ai_flutter/network/responses/user_response.dart';
 import 'package:orcal_ai_flutter/utils/constants.dart';
@@ -24,7 +25,7 @@ abstract class OrcalApiClient {
   );
 
   @POST(kEndpointChat)
-  Future<GenericResponse> chat(
+  Future<ChatResponse> chat(
     @Header(kHeaderAuthorization) String authorization,
     @Body() ChatRequest request,
   );

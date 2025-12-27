@@ -1,13 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orcal_ai_flutter/data/knowledge_base_cache/knowledge_base_cache.dart';
 import 'package:orcal_ai_flutter/data/vos/info_to_embed_vo.dart';
+import 'package:orcal_ai_flutter/network/firebase/dtos/chat_message.dart';
 import 'package:orcal_ai_flutter/network/firebase/firebase_service.dart';
 import 'package:orcal_ai_flutter/network/orcal_api_client.dart';
 import 'package:orcal_ai_flutter/network/requests/build_embeddings_request.dart';
 import 'package:orcal_ai_flutter/network/requests/chat_request.dart';
 import 'package:orcal_ai_flutter/network/requests/register_request.dart';
+import 'package:orcal_ai_flutter/network/responses/chat_response.dart';
 import 'package:orcal_ai_flutter/network/responses/generic_response.dart';
-import 'package:orcal_ai_flutter/network/responses/user_response.dart';
 import 'package:orcal_ai_flutter/network/retrofit_provider.dart';
 import 'package:orcal_ai_flutter/utils/constants.dart';
 
@@ -68,9 +70,16 @@ class OrcalRepository {
     return _client.buildEmbeddings(idToken, request);
   }
 
-  Future<GenericResponse> chat(String message) async {
+  Future<ChatResponse> chat(String message) async {
     ChatRequest request = ChatRequest(query: message);
     String idToken = await _firebaseService.getBearerToken();
     return _client.chat(idToken, request);
+  }
+
+  /// Get Latest Messages from firestore. Pagination handled.
+  Future<(List<ChatMessage>, DocumentSnapshot?)> getLatestMessages({
+    DocumentSnapshot? lastDocument,
+  }) {
+    return _firebaseService.getLatestMessages(lastDocument: lastDocument);
   }
 }

@@ -8,6 +8,7 @@ const kHeaderAuthorization = "Authorization";
 
 const kSplashScreenWaitTime = 3;
 const kNumberOfInfoToEmbed = 8;
+const kNoOfMessagesPerPage = 10;
 
 const kSpeakerUser = "user";
 const kSpeakerModel = "model";
