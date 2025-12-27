@@ -33,6 +33,10 @@ class OrcalRepository {
     return _firebaseService.signIn(email, password);
   }
 
+  Future<void> logOut() {
+    return _firebaseService.logOut();
+  }
+
   Future<User?> register(String email, String password, String username) async {
     RegisterRequest request = RegisterRequest(
       email: email,
@@ -81,5 +85,10 @@ class OrcalRepository {
     DocumentSnapshot? lastDocument,
   }) {
     return _firebaseService.getLatestMessages(lastDocument: lastDocument);
+  }
+
+  /// Get current user uid.
+  String getCurrentUserUid() {
+    return _firebaseService.getCurrentUserUid();
   }
 }

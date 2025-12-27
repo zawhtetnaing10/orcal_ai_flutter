@@ -41,6 +41,11 @@ class FirebaseService {
     return credentials.user;
   }
 
+  /// Logout
+  Future<void> logOut() {
+    return auth.signOut();
+  }
+
   /// Check if user is logged in.
   bool isUserLoggedIn() {
     return auth.currentUser != null;

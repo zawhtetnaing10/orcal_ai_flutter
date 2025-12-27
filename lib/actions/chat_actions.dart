@@ -12,6 +12,8 @@ class OnChatListEndReached extends ChatActions {}
 
 class OnTapLogout extends ChatActions {}
 
+class OnTapConfirmLogout extends ChatActions {}
+
 class OnTapEditKnowledgeBase extends ChatActions {}
 
 class OnDismissDialog extends ChatActions {}
