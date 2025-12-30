@@ -7,8 +7,9 @@ import 'package:orcal_ai_flutter/widgets/orcal_primary_button.dart';
 
 class LogoutDialog extends StatelessWidget {
   final VoidCallback onTapOk;
+  final VoidCallback onTapCancel;
 
-  const LogoutDialog({super.key, required this.onTapOk});
+  const LogoutDialog({super.key, required this.onTapOk, required this.onTapCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,7 @@ class LogoutDialog extends StatelessWidget {
                         label: "Cancel",
                         onPressed: () {
                           Navigator.pop(context);
+                          onTapCancel();
                         },
                       ),
                     ),

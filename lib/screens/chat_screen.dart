@@ -96,6 +96,9 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
               onTapOk: () {
                 context.read<ChatBloc>().onAction(OnTapConfirmLogout());
               },
+              onTapCancel: (){
+                context.read<ChatBloc>().onAction(OnDismissDialog());
+              }
             );
             break;
           case ChatEvents.navigateToLogin:

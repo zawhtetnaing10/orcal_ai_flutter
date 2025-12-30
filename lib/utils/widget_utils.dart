@@ -38,12 +38,13 @@ void showErrorDialog({
 void showLogoutDialog({
   required BuildContext context,
   required VoidCallback onTapOk,
+  required VoidCallback onTapCancel,
 }) {
   showDialog(
     context: context,
     barrierDismissible: false,
     builder: (dialogContext) {
-      return LogoutDialog(onTapOk: onTapOk);
+      return LogoutDialog(onTapOk: onTapOk, onTapCancel: onTapCancel);
     },
   );
 }
