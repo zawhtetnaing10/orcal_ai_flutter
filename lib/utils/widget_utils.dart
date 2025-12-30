@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:orcal_ai_flutter/dialogs/build_embeddings_success_dialog.dart';
 import 'package:orcal_ai_flutter/dialogs/error_dialog.dart';
+import 'package:orcal_ai_flutter/dialogs/logout_dialog.dart';
+
+import 'dimens.dart';
 
 void showLoadingDialog(BuildContext context) {
   showDialog(
@@ -11,7 +14,7 @@ void showLoadingDialog(BuildContext context) {
       return Center(
         child: LoadingAnimationWidget.staggeredDotsWave(
           color: Colors.white,
-          size: 88,
+          size: kLoadingIndicatorSize,
         ),
       );
     },
@@ -28,6 +31,19 @@ void showErrorDialog({
     barrierDismissible: false,
     builder: (dialogContext) {
       return ErrorDialog(errorMessage: errorMessage, onTapOk: onTapOk);
+    },
+  );
+}
+
+void showLogoutDialog({
+  required BuildContext context,
+  required VoidCallback onTapOk,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (dialogContext) {
+      return LogoutDialog(onTapOk: onTapOk);
     },
   );
 }

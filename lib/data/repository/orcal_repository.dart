@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orcal_ai_flutter/data/knowledge_base_cache/knowledge_base_cache.dart';
 import 'package:orcal_ai_flutter/data/vos/info_to_embed_vo.dart';
 import 'package:orcal_ai_flutter/network/firebase/dtos/chat_message.dart';
+import 'package:orcal_ai_flutter/network/firebase/dtos/firestore_user.dart';
 import 'package:orcal_ai_flutter/network/firebase/firebase_service.dart';
 import 'package:orcal_ai_flutter/network/orcal_api_client.dart';
 import 'package:orcal_ai_flutter/network/requests/build_embeddings_request.dart';
@@ -50,6 +51,11 @@ class OrcalRepository {
   /// Checks if user is logged in
   bool isUserLoggedIn() {
     return _firebaseService.isUserLoggedIn();
+  }
+
+  /// Get current logged in user
+  Future<FirestoreUser> getLoggedInUser() {
+    return _firebaseService.getLoggedInUser();
   }
 
   /// Checks if knowledge base has been built for this user

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orcal_ai_flutter/network/firebase/dtos/chat_message.dart';
+import 'package:orcal_ai_flutter/network/firebase/dtos/firestore_user.dart';
 import 'package:orcal_ai_flutter/utils/constants.dart';
 
 class FirebaseService {
@@ -78,13 +79,36 @@ class FirebaseService {
           .get();
 
       if (!snapshot.exists) {
-        return Future.error("Data does not exists");
+        return Future.error("Data does not exist");
       }
 
       Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
       return data["is_knowledge_base_built"] as bool? ?? false;
     } on Exception catch (e) {
       return Future.error("Error checking knowledge base $e");
+    }
+  }
+
+  Future<FirestoreUser> getLoggedInUser() async {
+    try {
+      String uid = getCurrentUserUid();
+
+      DocumentSnapshot snapshot = await db
+          .collection("users")
+          .doc(uid)
+          .collection("profile")
+          .doc("user_info")
+          .get();
+
+      if (!snapshot.exists) {
+        throw Exception("User does not exist");
+      }
+
+      return FirestoreUser.fromFirestore(
+        snapshot as DocumentSnapshot<Map<String, dynamic>>,
+      );
+    } on Exception catch (e) {
+      return Future.error("Error fetching user: $e");
     }
   }
 

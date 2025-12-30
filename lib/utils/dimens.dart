@@ -20,7 +20,11 @@ const kTextFieldHeight = 56.0;
 const kTextAreaHeight = 100.0;
 const kDialogLogoSize = 100.0;
 const kLogoSize = 150.0;
-
+const kChatEmptyLogoSize = 40.0;
 const kChatLogoSize = 28.0;
 
 const kChatBarHeight = 88.0;
+const kLoadingIndicatorSize = 88.0;
+const kChatLoadingIndicatorSize = 40.0;
+
+const kChatEmptyViewMarginBottom = 120.0;
