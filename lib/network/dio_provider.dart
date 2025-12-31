@@ -14,8 +14,8 @@ class DioProvider {
           Headers.acceptHeader: 'application/json',
           Headers.contentTypeHeader: 'application/json',
         },
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
+        connectTimeout: const Duration(seconds: 120),
+        receiveTimeout: const Duration(seconds: 120),
       ),
     );
   }

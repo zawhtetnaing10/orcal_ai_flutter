@@ -129,7 +129,7 @@ class FirebaseService {
 
     /// Start after the last document
     if (lastDocument != null) {
-      query.startAfterDocument(lastDocument);
+      query = query.startAfterDocument(lastDocument);
     }
 
     /// Wait for the query to get the data

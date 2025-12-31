@@ -162,13 +162,11 @@ class _ChatScreenBodyState extends State<ChatScreenBody> {
                         builder: (context, isLoadingMoreMessages) =>
                             (isLoadingMoreMessages)
                             ? SliverToBoxAdapter(
-                                child: SliverToBoxAdapter(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      top: kMarginMedium,
-                                    ),
-                                    child: LoadingMoreChatMessages(),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: kMarginMedium,
                                   ),
+                                  child: LoadingMoreChatMessages(),
                                 ),
                               )
                             : SliverToBoxAdapter(child: SizedBox.shrink()),
